@@ -1,0 +1,5 @@
+/conf/db.ini
+/input
+.DS_Store
+nohup.out
+/logs
