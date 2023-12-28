@@ -39,7 +39,7 @@ def scan_epub_book(book):
                      'xii','vii','iii','ixx','vy','nb','um','ig','ib','ry','ab','wh','ib','ig','vy','nb',
                      'um','ig','ib','ry','ab','wh','bu','ya','pf','au','es','jk','ex','oo','oi','hi','al',
                      'ow','ze','re','eh','st','em','ah','xi','fk','ps','ay','vp','co','dr','fs','tu','ia',
-                     'pt','th','xi','bf','lc','yo','pp','ed','ix',
+                     'pt','th','xi','bf','lc','yo','pp','ed','ix','','\\’'
                      )
     book_path = f'./conf/book/{book}.epub'
     word_freq_dic = {}
@@ -48,7 +48,7 @@ def scan_epub_book(book):
     text = epubs.to_text(book_path) 
     for paragraph in list(text):
         for sentence in paragraph:
-            sentence = re.sub(r'[^A-Za-z -]','',sentence)
+            sentence = re.sub(r'[^A-Za-z - \' \’ \']','',sentence)
             for word in re.split(r'[ |-]',sentence):
                 word = word.lower()
                 if word not in illegal_words :
