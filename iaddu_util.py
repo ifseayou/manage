@@ -1,3 +1,4 @@
+import openai
 import pymysql
 import configparser
 import mysql.connector
@@ -59,11 +60,52 @@ class IadduUtil:
         conn_pool = PooledDB(pymysql, **db_config)
         return conn_pool
 
+    @staticmethod
+    def get_msg_by_ai(messages, 
+                    model="gpt-3.5-turbo", 
+                    temperature=0, 
+                    max_tokens=2000):
+        response = openai.chat.completions.create(
+            model=model,
+            messages=messages,
+            temperature=temperature,
+            max_tokens=max_tokens,
+        )
+        return response.choices[0].message.content
+
+    @staticmethod
+    def log_ai_res(msg,log_path):
+        with open(log_path, 'a') as file:  # 追加写入
+            if msg != None:
+                file.write(f"{msg}" + "\n") 
+
+
+def test_conn_pool():
+    my_utility = IadduUtil()
+    conn_pool = my_utility.get_mysql_conn_pool(5)
+    
+    try:
+        conn = conn_pool.connection()
+        cursor = conn.cursor()
+        sql = """
+        select name
+        from authors
+        where life is null 
+        or life = ''
+        """
+        cursor.execute(sql)
+        new_author_list = [row[0] for row in cursor.fetchall()]
+        for i in new_author_list:
+            print(i)
+    finally:
+        cursor.close()
+        # 这里不需要手动关闭连接，连接池会进行连接管理
+        # conn.close()
+        conn_pool.conn.close()
+
+
 # 示例用法
 if __name__ == "__main__":
     
     # 创建工具类实例
-    my_utility = IadduUtil()
-    conn_pool = my_utility.get_mysql_conn_pool(5)
-    conn_pool.connection()
-    print("hello")
+    test_conn_pool()

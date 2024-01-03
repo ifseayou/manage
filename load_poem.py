@@ -8,11 +8,10 @@
              2，根据诗词名称爬取古诗文网站的诗词内容
              3，写入到 poems 表中
 '''
-
-from iaddu_util import IadduUtil
+import re
 import requests
 from bs4 import BeautifulSoup
-import re
+from iaddu_util import IadduUtil
 
 
 
