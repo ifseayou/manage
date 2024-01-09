@@ -142,7 +142,6 @@ def get_author_by_ai(author_list):
     李清照\t易安居士\t女\t北宋\t1084\t1155\t71\t山东济南
     """
 
-    print("开始请求OpenAI接口，相对耗时.....\n")
     batch_author = "#".join(author_list)       # 用"#"连接键
 
 

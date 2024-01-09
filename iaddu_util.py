@@ -71,6 +71,8 @@ class IadduUtil:
             temperature=temperature,
             max_tokens=max_tokens,
         )
+        print("\n 请确认是否开启VPN.....\n")
+        print("\n 开始请求OpenAI接口，相对耗时.....\n")
         return response.choices[0].message.content
 
     @staticmethod
@@ -78,6 +80,13 @@ class IadduUtil:
         with open(log_path, 'a') as file:  # 追加写入
             if msg != None:
                 file.write(f"{msg}" + "\n") 
+
+    @staticmethod
+    def select_query(select_sql):
+        
+        pass 
+
+
 
 
 def test_conn_pool():

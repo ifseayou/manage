@@ -14,7 +14,6 @@ from bs4 import BeautifulSoup
 from iaddu_util import IadduUtil
 
 
-
 def get_poem_list(conn):
     cursor = conn.cursor()
     poem_list = None
@@ -87,7 +86,7 @@ def update_poem(conn,poem_list):
             poem_content = get_poem_content(poem_name)
 
             update_query = f"""
-            update dataease.poems 
+            update dataease.poems
             set content = '{poem_content}' 
             where id = {poem_id}
             """
