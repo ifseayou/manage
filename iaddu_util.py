@@ -34,7 +34,7 @@ class IadduUtil:
 
     # 获取MySQL连接池
     @staticmethod
-    def get_mysql_conn_pool(max_conn):
+    def get_mysql_conn_pool(max_conn=5):
         # 创建一个ConfigParser对象
         config = configparser.ConfigParser()
         # 读取INI文件
@@ -76,7 +76,7 @@ class IadduUtil:
         return response.choices[0].message.content
 
     @staticmethod
-    def log_ai_res(msg,log_path):
+    def log_res(msg,log_path):
         with open(log_path, 'a') as file:  # 追加写入
             if msg != None:
                 file.write(f"{msg}" + "\n") 

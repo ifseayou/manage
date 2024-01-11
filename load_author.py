@@ -117,12 +117,8 @@ def get_author_life(author_name):
             for h2_ele in h2_elements:
                 if '生平' in h2_ele.text or '人物生平' in h2_ele.text:
                         print(div_contyishang.prettify())  # 如果要打印整个元素，可以使用prettify()方法
-
-  
-
     
     return author_life
-
 
 
 # 将爬取到的内容，清洗之后，写入到 authors 表中
@@ -144,7 +140,6 @@ def get_author_by_ai(author_list):
 
     batch_author = "#".join(author_list)       # 用"#"连接键
 
-
     user_message_for_model = f"""
         {batch_author}
     """
@@ -157,8 +152,7 @@ def get_author_by_ai(author_list):
     author_info = IadduUtil().get_msg_by_ai(messages)
 
     # 将AI翻译的结果输出到日志中
-    IadduUtil().log_ai_res(author_info,'./conf/ai_author.txt')
-
+    IadduUtil().log_res(author_info,'./conf/ai_author.txt')
 
     # 将文本按行分割，并去掉空行
     lines = [line.strip() for line in author_info.split('\n') if line.strip()]
@@ -187,15 +181,15 @@ def save_to_db(author_list, conn):
         cursor.close()
         
 
-def main():
+def main(option):
     try:
-        conn_pool =  IadduUtil.get_mysql_conn_pool(5)
-        new_author_list = get_new_author(conn_pool.connection())
-        # insert_new_author(new_author_list,conn_pool.connection())
+        conn_pool =  IadduUtil.get_mysql_conn_pool()
+        if option == '2':
+            new_author_list = get_new_author(conn_pool.connection())
+        else:
+            new_author_list = option.split(',') 
     
         author_list = get_author_by_ai(new_author_list)
-        # for i in author_list:
-        #     print(i)
         save_to_db(author_list,conn_pool.connection())
         
     finally:
@@ -203,14 +197,5 @@ def main():
         # conn_pool.close()
 
 if __name__ == '__main__':
-    main()
-    # author = ['李白','杜甫']
-    # get_author_by_ai(author)
-    # author_url = get_author_url('李白')
-    # author_url = get_author_url('杜甫')
-    # author_url = get_author_url('苏轼')
-    # author_url = get_author_url('文天祥')
-    # author_url = get_author_url('贾岛')    
-    # author_url = get_author_url('小李')
-
-    # print(author_url)
+    option = input("请输入作者名称(默认查询poem有author没有的作者)，按照英文逗号分割: ") or "2"
+    main(option)
