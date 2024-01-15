@@ -143,3 +143,4 @@ if __name__ == '__main__':
     option = input("请输入类型，1：按照作者，2：按照标签: ")
     if(option in ('1','2')):
         main(option)
+
