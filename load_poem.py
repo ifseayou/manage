@@ -47,7 +47,7 @@ def get_poem_list(conn):
 
 def get_poem_content(poem_name):
     value = poem_name
-    valuej = poem_name[0] 
+    valuej = poem_name[0]
     url = f'https://so.gushiwen.cn/search.aspx?value={value}&valuej={valuej}'
     
     # 发起 GET 请求
@@ -104,8 +104,7 @@ def update_poem(conn,poem_list):
         cursor.close()
         conn.close()
 
-
-if __name__ == '__main__':
+def main():
     util_instance = IadduUtil()
     conn1 = util_instance.get_mysql_conn()
     conn2 = util_instance.get_mysql_conn()
@@ -115,3 +114,6 @@ if __name__ == '__main__':
     
     # 为没有诗词内容的诗词增加内容
     update_poem(conn2,poem_list)
+
+if __name__ == '__main__':
+    main()
